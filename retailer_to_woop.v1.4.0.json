@@ -1328,8 +1328,19 @@
             }
           }
         },
-        "summary": "Label request"
-      }
+        "summary": "Retrieve a shipping label for an order"
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "orderId",
+          "in": "path",
+          "required": true,
+          "description": "Order ID"
+        }
+      ]
     },
     "/orders/{orderId}/return": {
       "post": {
@@ -2842,6 +2853,147 @@
             "in": "header",
             "name": "Accept",
             "description": "To obtain a Base64 response in json body, specify the value \"application/json\""
+          }
+        ]
+      }
+    },
+    "/orders/{orderId}/packages/{packageId}/label": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "orderId",
+          "in": "path",
+          "required": true,
+          "description": "Order ID"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "packageId",
+          "in": "path",
+          "required": true,
+          "description": "Package number"
+        }
+      ],
+      "get": {
+        "summary": "Transport label for a given package",
+        "tags": [
+          "Label"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. Contains the recovered label.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Label informations",
+                  "type": "object",
+                  "properties": {
+                    "base64": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "The label is returned in base64 in the format indicated during the call."
+                    },
+                    "trackingPageUrl:": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Link to the delivery tracking page"
+                    }
+                  },
+                  "required": [
+                    "base64",
+                    "trackingPageUrl:"
+                  ]
+                },
+                "examples": {
+                  "example": {
+                    "value": {
+                      "base64": "AxfzFZEGEg ...",
+                      "trackingPageUrl:": "https://tracking_url"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You are not authorized to access this item.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorCode"
+                },
+                "examples": {
+                  "example": {
+                    "value": {
+                      "statusCode": 0,
+                      "error": "string",
+                      "message": "string",
+                      "reasons": [
+                        "STORE_NOT_FOUND"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request impossible for this parcel number.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorCode"
+                },
+                "examples": {
+                  "example": {
+                    "value": {
+                      "statusCode": 0,
+                      "error": "string",
+                      "message": "string",
+                      "reasons": [
+                        "STORE_NOT_FOUND"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The package number indicated does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorCode"
+                },
+                "examples": {
+                  "example": {
+                    "value": {
+                      "statusCode": 0,
+                      "error": "string",
+                      "message": "string",
+                      "reasons": [
+                        "STORE_NOT_FOUND"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "getLabelByPackage",
+        "description": "This method allows you to retrieve a shipping label for a given package from a sales order. The label can be retrieved in several formats (provided that the carrier is compatible with this format). The retrieved label is unique and is attached to only one package of the order.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/apiVersion"
+          },
+          {
+            "$ref": "#/components/parameters/queryMode"
           }
         ]
       }
