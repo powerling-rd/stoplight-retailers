@@ -1,6 +1,6 @@
 # Delivery status
 
-During its life cycle, the order goes through different statuses. Those we identify are the different delivery steps.
+During its life cycle, the delivery goes through different statuses. Those we identify are the different delivery steps.
 
 ### Order workflow
 
@@ -32,4 +32,4 @@ During its life cycle, the order goes through different statuses. Those we ident
 
 ### Returns and errors handling
 
-![get-started-icon](../../assets/images/product-return-workflow.png)
+![get-started-icon](../../assets/images/product-return-workflow-delivery.png)

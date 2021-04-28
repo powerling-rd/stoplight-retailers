@@ -637,6 +637,105 @@
                       "currrency": "EUR"
                     }
                   }
+                },
+                "Example with choice of carrier": {
+                  "value": {
+                    "orderId": "65z4eq1d6q54zd1",
+                    "referenceNumber": "65q41zdq65z14",
+                    "storeId": "AX645",
+                    "picking": {
+                      "location": {
+                        "type": "exchangePlace",
+                        "id": "EXCHANGE PLACE 1"
+                      },
+                      "interval": [
+                        {
+                          "start": "2019-11-27T12:00:00+0000",
+                          "end": "2019-11-27T14:00:00+0000"
+                        }
+                      ],
+                      "contact": {
+                        "firstName": "Michel",
+                        "lastName": "Dupont",
+                        "phone": "+33600000000",
+                        "email": "michel.dupont@mail.fr",
+                        "language": "fr",
+                        "timezone": "Europe/Paris"
+                      }
+                    },
+                    "delivery": {
+                      "location": {
+                        "type": "address",
+                        "addressLine1": "165 avenue de Bretagne",
+                        "elevator": true,
+                        "floor": 3,
+                        "postalCode": "59000",
+                        "city": "Lille",
+                        "country": "FR"
+                      },
+                      "infos": "The street is under construction",
+                      "interval": [
+                        {
+                          "start": "2019-11-28T13:30:00+0000",
+                          "end": "2019-11-28T14:30:00+0000"
+                        }
+                      ],
+                      "contact": {
+                        "firstName": "Pierre",
+                        "lastName": "Dupond",
+                        "phone": "+33600000000",
+                        "email": "pierre.dupond@mail.fr",
+                        "language": "fr",
+                        "timezone": "Europe/Paris"
+                      }
+                    },
+                    "packages": [
+                      {
+                        "length": {
+                          "value": 15,
+                          "unit": "cm"
+                        },
+                        "width": {
+                          "value": 15,
+                          "unit": "cm"
+                        },
+                        "height": {
+                          "value": 1.2,
+                          "unit": "m"
+                        },
+                        "weight": {
+                          "value": 560,
+                          "unit": "g"
+                        },
+                        "references": [
+                          "123456789A",
+                          "123456789B",
+                          "123456789C",
+                          "123456789D",
+                          "123456789E"
+                        ],
+                        "products": [
+                          {
+                            "type": "TYPOLOGY_GENERIC",
+                            "ean": "4dq86zd4q6zd4q64",
+                            "cug": "q56zd4q65d4q",
+                            "label": "Chair",
+                            "quantity": 1
+                          }
+                        ],
+                        "quantity": 5
+                      }
+                    ],
+                    "tags": [
+                      {
+                        "key": "selected_carrier",
+                        "value": "carrier_code"
+                      }
+                    ],
+                    "services": [
+                      "SERVICE_FRONT_HOME"
+                    ]
+                  }
                 }
               }
             }
@@ -1409,7 +1508,7 @@
                         "city": "La Madeleine",
                         "country": "FR"
                       },
-                      "infos": "La rue est en travaux",
+                      "infos": "Road is under construction",
                       "interval": [
                         {
                           "start": "2019-11-28T13:00:00+0000",
@@ -1448,7 +1547,7 @@
                             "type": "TYPOLOGY_GENERIC",
                             "ean": "4dq86zd4q6zd4q64",
                             "cug": "q56zd4q65d4q",
-                            "label": "Lampe",
+                            "label": "Chair",
                             "quantity": 1
                           }
                         ],
@@ -2082,9 +2181,6 @@
               "schema": {
                 "type": "object",
                 "description": "Subscriptions informations",
-                "required": [
-                  "callbacks"
-                ],
                 "properties": {
                   "callbacks": {
                     "type": "object",
@@ -2152,9 +2248,6 @@
                       "deliveryClosure": {
                         "type": "object",
                         "description": "Callback allowing to receive the billing informations",
-                        "required": [
-                          "url"
-                        ],
                         "properties": {
                           "url": {
                             "type": "string",
@@ -2165,14 +2258,14 @@
                             "description": "API version for this callback",
                             "example": "1.1.0"
                           }
-                        }
+                        },
+                        "required": [
+                          "url"
+                        ]
                       },
                       "event": {
                         "type": "object",
                         "description": "Callback allowing to receive the notifications send to customer",
-                        "required": [
-                          "url"
-                        ],
                         "properties": {
                           "url": {
                             "type": "string",
@@ -2183,7 +2276,44 @@
                             "description": "API version for this callback",
                             "example": "1.1.0"
                           }
-                        }
+                        },
+                        "required": [
+                          "url"
+                        ]
+                      },
+                      "deltaCost": {
+                        "type": "object",
+                        "description": "Callback to receive deltaCost information issued by the carrier on the order.",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "description": "API route URL"
+                          },
+                          "version": {
+                            "type": "string",
+                            "description": "API version for this callback"
+                          }
+                        },
+                        "required": [
+                          "url"
+                        ]
+                      },
+                      "quote": {
+                        "type": "object",
+                        "description": "Callback to receive quotes from carriers.",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "description": "API route URL"
+                          },
+                          "version": {
+                            "type": "string",
+                            "description": "API version for this callback"
+                          }
+                        },
+                        "required": [
+                          "url"
+                        ]
                       }
                     }
                   },
@@ -2278,7 +2408,10 @@
                       }
                     }
                   }
-                }
+                },
+                "required": [
+                  "callbacks"
+                ]
               },
               "examples": {
                 "Basic": {
@@ -3561,7 +3694,16 @@
             "description": "District"
           },
           "country": {
-            "$ref": "#/components/schemas/country"
+            "type": "string",
+            "description": "Country code (ISO 3166 alpha-2).",
+            "enum": [
+              "FR",
+              "BE"
+            ],
+            "x-examples": {
+              "Exemple": "FR"
+            },
+            "title": "Country"
           },
           "comment": {
             "type": "string",
