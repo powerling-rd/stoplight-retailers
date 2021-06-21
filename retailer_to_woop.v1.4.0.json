@@ -1089,7 +1089,7 @@
             }
           },
           "409": {
-            "description": "Order already cancelled"
+            "description": "The order is already cancelled or an action is already in progress on this order"
           }
         },
         "summary": "Order cancellation"
@@ -1316,6 +1316,9 @@
                 }
               }
             }
+          },
+          "409": {
+            "description": "An action is already in progress on this order"
           }
         },
         "summary": "Order update"

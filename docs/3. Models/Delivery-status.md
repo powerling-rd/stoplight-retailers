@@ -30,6 +30,9 @@ During its life cycle, the delivery goes through different statuses. Those we id
 | `DELIVERY_AVAILABLE`             | Delivery available in pickup point
 | `DELIVERY_REPLANNED`             | Delivery date replanned by an appointment with the customer
 
+
+The statuses `DELIVERY_PICK_UP_PARTIALLY` and `DELIVERY_DELIVERED_PARTIALLY` are reserved for delivery and are not allowed for package tracking.
+
 ### Returns and errors handling
 
 ![get-started-icon](../../assets/images/product-return-workflow-delivery.png)

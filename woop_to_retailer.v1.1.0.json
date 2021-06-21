@@ -2,7 +2,7 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Woop to Retailer",
-    "description": "First, all informations about Woop API headed to retailers are centralized in this documentation. If you need precisions or have any questions, please contact internal technical team.\n\nTo use the API, you need to take your access you got during the creation of your account on Woop platform.\n\nThe current offered version is <b>Version 1.1.0</b>",
+    "description": "First, all informations about Woop API headed to retailers are centralized in this documentation. If you need precisions or have any questions, please contact internal technical team.\n\nTo use the API, you need to take your access you got during the creation of your account on Woop platform.\n\nThe current offered version is <b>Version 1.4.0</b>",
     "version": "1.1.1"
   },
   "tags": [
@@ -17,7 +17,7 @@
           "Order"
         ],
         "operationId": "putOrderCarrier",
-        "description": "A method to receive the notification when a carrier is selected to achieve a delivery.",
+        "description": "This method allows you to receive the name of the carrier selected for a given order. \n\nWhen the carrier is selected to deliver the order, the information is sent.",
         "parameters": [
           {
             "$ref": "#/components/parameters/pathOrderId"
@@ -183,12 +183,7 @@
           }
         },
         "summary": "Receive notification of the selected carrier for an order"
-      },
-      "parameters": [
-        {
-          "$ref": "./retailer_to_woop.v1.4.0.json#/components/parameters/pathOrderId"
-        }
-      ]
+      }
     },
     "/orders/{orderId}/status": {
       "put": {
@@ -196,7 +191,7 @@
           "Order"
         ],
         "operationId": "putOrderStatus",
-        "description": "A method to receive the status update from the carrier",
+        "description": "This method allows the retailer to receive delivery status updates from the carrier for a given order.  \n\nThe retailer will then be able to follow the evolution of the delivery in real time.",
         "parameters": [
           {
             "$ref": "#/components/parameters/pathOrderId"
@@ -317,18 +312,7 @@
           }
         },
         "summary": "Receive notification of status update for a delivery"
-      },
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "orderId",
-          "in": "path",
-          "required": true,
-          "description": "Order ID"
-        }
-      ]
+      }
     },
     "/orders/{orderId}/score": {
       "put": {
@@ -336,7 +320,7 @@
           "Order"
         ],
         "operationId": "putOrderScore",
-        "description": "A method to receive a notification when a customer put a score on a delivery",
+        "description": "This method allows us to receive customer returns following delivery.",
         "parameters": [
           {
             "$ref": "#/components/parameters/pathOrderId"
@@ -362,8 +346,11 @@
                     }
                   },
                   "comment": {
-                    "type": "string",
-                    "description": "Free comment"
+                    "type": "array",
+                    "description": "Customer feedback",
+                    "items": {
+                      "$ref": "#/components/schemas/scoreComment"
+                    }
                   }
                 },
                 "required": [
@@ -379,10 +366,16 @@
                     "score": [
                       {
                         "note": 9,
-                        "type": "SCORE_TYPE_SATISFACTION"
+                        "type": "SCORE_TYPE_SATISFACTION",
+                        "includedInCarrierScore": true
                       }
                     ],
-                    "comment": "J'ai été très satisfaite de ma livraison !"
+                    "comment": [
+                      {
+                        "answer": "No, correct delivery.",
+                        "question": "Do you have any suggestions to share with us to help us improve our delivery service?"
+                      }
+                    ]
                   }
                 }
               }
@@ -628,7 +621,7 @@
           "Order"
         ],
         "operationId": "postOrderEvents",
-        "description": "A method to reveive event notification about an order",
+        "description": "This method allows you to receive events related to an order. All notifications sent to the customer will be forwarded to the company: reasons for failure, date sent and content of the notification. \n\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/pathOrderId"
@@ -1033,10 +1026,11 @@
         "x-examples": {
           "Example": {
             "note": 5,
-            "type": "SCORE_TYPE_RECOMMENDATION"
+            "type": "SCORE_TYPE_RECOMMENDATION",
+            "includedInCarrierScore": true
           }
         },
-        "description": "Corresponds to the delivery notation by the customer",
+        "description": "Specifies the grade received from the end customer for the delivery made and whether it is included in the carrier grade calculation. ",
         "properties": {
           "note": {
             "type": "number",
@@ -1049,11 +1043,16 @@
               "SCORE_TYPE_SATISFACTION"
             ],
             "description": "Score type"
+          },
+          "includedInCarrierScore": {
+            "type": "boolean",
+            "description": "Included in the carrier note"
           }
         },
         "required": [
           "note",
-          "type"
+          "type",
+          "includedInCarrierScore"
         ]
       },
       "contact": {
@@ -1714,6 +1713,31 @@
           "REFUSED_TIME_NOT_WORKED",
           "REFUSED_TOO_HEAVY",
           "REFUSED_TOO_LARGE"
+        ]
+      },
+      "scoreComment": {
+        "title": "Comments on the delivery (scoreComment)",
+        "type": "object",
+        "x-examples": {
+          "Exemple": {
+            "answer": "No comment !",
+            "question": "Do you have any suggestions to share with us to help us improve our delivery service?"
+          }
+        },
+        "description": "Free field for customer comments",
+        "properties": {
+          "answer": {
+            "type": "string",
+            "description": "Response from the end customer"
+          },
+          "question": {
+            "type": "string",
+            "description": "Question asked to the end customer"
+          }
+        },
+        "required": [
+          "answer",
+          "question"
         ]
       }
     },
