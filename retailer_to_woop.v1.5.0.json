@@ -2950,11 +2950,6 @@
                   "callbacks": {
                     "type": "object",
                     "description": "Callbacks des événements",
-                    "required": [
-                      "carrier",
-                      "status",
-                      "score"
-                    ],
                     "properties": {
                       "carrier": {
                         "type": "object",
@@ -3083,9 +3078,6 @@
                       "collectStatus": {
                         "type": "object",
                         "description": "Callback permettant de recevoir les changements de statut d'une collecte",
-                        "required": [
-                          "url"
-                        ],
                         "properties": {
                           "url": {
                             "type": "string",
@@ -3096,7 +3088,10 @@
                             "description": "Version d'API pour ce callback",
                             "example": "1.1.0"
                           }
-                        }
+                        },
+                        "required": [
+                          "url"
+                        ]
                       }
                     }
                   },
