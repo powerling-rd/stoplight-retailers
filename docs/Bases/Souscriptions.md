@@ -39,7 +39,7 @@ Les données à envoyer sont :
         "carrier": {
           "type": "object",
           "description": "Callback permettant de recevoir le choix du transporteur.",
-         [
+         "required":[
             "url"
           ],
           "properties": {
@@ -56,7 +56,7 @@ Les données à envoyer sont :
         },
         "status": {
           "type": "object",
-          [
+          "required":[
             "url"
           ],
           "description": "Callback permettant de recevoir les changements de statut",
@@ -75,7 +75,7 @@ Les données à envoyer sont :
         "score": {
           "type": "object",
           "description": "Callback permettant de recevoir les notes client",
-          [
+          "required":[
             "url"
           ],
           "properties": {
@@ -93,7 +93,7 @@ Les données à envoyer sont :
         "deliveryClosure": {
           "type": "object",
           "description": "Callback permettant de recevoir les informations de facturation",
-          [
+          "required":[
             "url"
           ],
           "properties": {
@@ -111,7 +111,7 @@ Les données à envoyer sont :
         "event": {
           "type": "object",
           "description": "Callback permettant de recevoir les notifications envoyées au client",
-          [
+          "required":[
             "url"
           ],
           "properties": {
@@ -129,7 +129,7 @@ Les données à envoyer sont :
         "collectStatus": {
           "type": "object",
           "description": "Callback permettant de recevoir les changements de statut d'une collecte",
-          [
+          "required":[
             "url"
           ],
           "properties": {
