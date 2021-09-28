@@ -831,7 +831,7 @@
         "tags": [
           "Commande"
         ],
-        "description": "Cette méthode retourne les détails d'une ou de plusieurs commandes en fonction des filtres sélectionnés.",
+        "description": "Cette méthode retourne les détails d'une ou de plusieurs commandes en fonction des filtres sélectionnés.\n\nLa méthode utilisée est régie par les contraintes suivantes:\n\n- Résultat limité à un retour de 100 commandes\n- Tri naturel des commandes de la plus ancienne à la plus récente\n\nA noter: Il est conseillé d'annuler régulièrement les anciennes de test n'évoluant pas sur votre environnement de staging. ",
         "operationId": "getOrders",
         "parameters": [
           {
