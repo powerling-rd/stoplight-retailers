@@ -5406,15 +5406,15 @@
       },
       "packagesReferences": {
         "type": "array",
-        "items": {
-          "type": "string"
-        },
-        "description": "Précise le numéro de colis de l'enseigne.",
+        "description": "Précise le numéro de colis défini par l'enseigne. A noter que le nombre de référence doit être égal à la quantité de colis renseigné !",
         "title": "Références des colis (packagesReferences)",
         "x-examples": {
           "example-1": [
             "string"
           ]
+        },
+        "items": {
+          "type": "string"
         }
       },
       "productsPrice": {
